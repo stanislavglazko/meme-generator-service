@@ -1,0 +1,56 @@
+version: "3.7"
+
+x-api-volumes:
+  &api-volumes
+  - ./server:/app:cached
+
+x-app-config:
+  &app-config
+  DJANGO_ENV: dev
+  DJANGO_SECRET_KEY: secret-key-abcdefghijklmnopqrstuvwxyz-abcdefghijklmnopqrstuvwxyz
+  REPORT_FOLDER: "reports/"
+
+x-db-config:
+  &db-config
+  DATABASE_NAME: postgres
+  DATABASE_USER: postgres
+  DATABASE_PASSWORD: pgpassword
+  PGPASSWORD: pgpassword
+  DATABASE_HOST: db
+  DATABASE_PORT: 5432
+  POSTGRES_PASSWORD: pgpassword
+
+services:
+  api:
+    image: meme_generator_api
+    command: python ./manage.py runserver 0.0.0.0:8000
+    build:
+      context: ./server
+      target: base
+    env_file:
+      - secrets.env
+    environment:
+      <<: [*app-config, *db-config]
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes: *api-volumes
+    stdin_open: true
+    tty: true
+
+  db:
+    image: postgres:12.14-alpine
+    environment: *db-config
+    logging:
+      driver: none
+    ports:
+      - "5432:5432"
+    command:
+      -c fsync=off
+      -c full_page_writes=off
+      -c synchronous_commit=off
+
+
+volumes:
+  sqlvolume:
