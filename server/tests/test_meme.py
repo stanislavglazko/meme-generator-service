@@ -79,3 +79,70 @@ class TestMemeViewsSet(APITestCase):
                 "created_at": formatted_time_str,
             },
         ]
+
+    def request_create(self, data: dict[str, Any], args: list = None) -> Any:
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        return self.client.post(self.list_url(args), data=data)
+
+    def create(self, data: dict[str, Any]) -> dict[str, Any]:
+        response = self.request_create(data)
+        assert response.status_code == HTTPStatus.CREATED, response.content
+        return response.json()
+
+    def create_meme(self, data: dict) -> dict:
+        return self.create(data)
+
+    def test_create(self) -> None:
+        meme = self.create_meme(
+            {
+                "template": self.template.id,
+                "top_text": DEFAULT_TOP_TEXT,
+                "bottom_text": DEFAULT_BOTTOM_TEXT,
+                "created_by": self.user.id,
+            },
+        )
+        time_obj = datetime.strptime(DEFAULT_TIME, '%Y-%m-%dT%H:%M:%S.%fZ')
+        formatted_time_str = time_obj.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+        assert meme == {
+                "id": meme["id"],
+                "template": self.template.id,
+                "top_text": DEFAULT_TOP_TEXT,
+                "bottom_text": DEFAULT_BOTTOM_TEXT,
+                "created_by": self.user.id,
+                "created_at": formatted_time_str,
+            }
+
+    def test_retrieve(self) -> None:
+        created_meme = self.create_meme(
+            {
+                "template": self.template.id,
+                "top_text": DEFAULT_TOP_TEXT,
+                "bottom_text": DEFAULT_BOTTOM_TEXT,
+                "created_by": self.user.id,
+            },
+        )
+
+        meme = self.retrieve(created_meme)
+
+        assert meme == created_meme
+
+    def request_retrieve(
+        self, entity: dict, query_params: dict = None, args: list = None
+    ) -> Any:
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        return self.client.get(self.detail_url(entity["id"], args), data=query_params)
+
+    def retrieve(
+        self, entity: dict[str, Any], args: list = None, query_params: dict = None
+    ) -> dict[str, Any]:
+        response = self.request_retrieve(entity, query_params, args)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.json()
+
+    @classmethod
+    def detail_url(cls, key: str | int, args: list = None) -> str:
+        keys = [key]
+        if args:
+            keys.insert(0, *args)
+        return reverse(f"{cls.base_name}-detail", args=keys)
