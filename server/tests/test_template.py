@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 
-class MemeTemplateTests(APITestCase):
+class TestMemeTemplateViewSet(APITestCase):
     base_name: str
 
     @classmethod
@@ -42,8 +42,6 @@ class MemeTemplateTests(APITestCase):
         return response.json()["results"]
 
     def test_list(self) -> None:
-        res = self.list()
-        print("HHH", res)
         assert self.list() == [
             {
                 "id": self.first_template.id,

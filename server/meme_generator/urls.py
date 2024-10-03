@@ -19,10 +19,11 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
-from meme_generator.views import TemplatesViewsSet
+from meme_generator.views import MemeViewSet, TemplatesViewSet
 
 router = DefaultRouter()
-router.register(r'templates', TemplatesViewsSet, basename='template')
+router.register(r'templates', TemplatesViewSet, basename='template')
+router.register(r'memes', MemeViewSet, basename='meme')
 
 
 SchemaView = get_schema_view(

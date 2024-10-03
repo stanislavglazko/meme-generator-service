@@ -1,5 +1,7 @@
-from .template import TemplatesViewsSet
+from .meme import MemeViewSet
+from .template import TemplatesViewSet
 
 __all__ = [
-    "TemplatesViewsSet",
+    "TemplatesViewSet",
+    "MemeViewSet",
 ]
