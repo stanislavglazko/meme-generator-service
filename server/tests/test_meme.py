@@ -26,20 +26,18 @@ class TestMemeViewsSet(APITestCase):
         cls.template = MemeTemplate.objects.create(
             name="Template",
             image_url="https://example.com/template1.jpg",
-            default_top_text=DEFAULT_TOP_TEXT,
-            default_bottom_text=DEFAULT_BOTTOM_TEXT,
+            default_top_text=f"Template{DEFAULT_TOP_TEXT}",
+            default_bottom_text=f"Template{DEFAULT_BOTTOM_TEXT}",
 
         )
         cls.first_meme = Meme.objects.create(
             template=cls.template,
-            top_text=DEFAULT_TOP_TEXT,
             bottom_text=DEFAULT_BOTTOM_TEXT,
             created_by=cls.user,
         )
         cls.second_meme = Meme.objects.create(
             template=cls.template,
             top_text=DEFAULT_TOP_TEXT,
-            bottom_text=DEFAULT_BOTTOM_TEXT,
             created_by=cls.user,
         )
         cls.base_name = "meme"
@@ -65,7 +63,7 @@ class TestMemeViewsSet(APITestCase):
             {
                 "id": self.first_meme.id,
                 "template": self.template.id,
-                "top_text": DEFAULT_TOP_TEXT,
+                "top_text": self.template.default_top_text,
                 "bottom_text": DEFAULT_BOTTOM_TEXT,
                 "created_by": self.user.id,
                 "created_at": formatted_time_str,
@@ -74,7 +72,7 @@ class TestMemeViewsSet(APITestCase):
                 "id": self.second_meme.id,
                 "template": self.template.id,
                 "top_text": DEFAULT_TOP_TEXT,
-                "bottom_text": DEFAULT_BOTTOM_TEXT,
+                "bottom_text": self.template.default_bottom_text,
                 "created_by": self.user.id,
                 "created_at": formatted_time_str,
             },
