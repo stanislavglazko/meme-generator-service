@@ -17,7 +17,7 @@ class MemeAdmin(admin.ModelAdmin):
 
 @admin.register(MemeTemplate)
 class MemeTemplateAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'image_url', 'default_top_text', 'default_bottom_text')
+    list_display = ('id', 'name', 'image_url', 'image', 'default_top_text', 'default_bottom_text')
 
 
 @admin.register(Rating)

@@ -1,15 +1,19 @@
+import io
+from PIL import Image
 from typing import Any, Final
 from http import HTTPStatus
-from rest_framework.test import APITestCase
 from django.urls import reverse
 from meme_generator.models import MemeTemplate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 DEFAULT_TOP_TEXT: Final[str] = "top"
 DEFAULT_BOTTOM_TEXT: Final[str] = "bottom"
+DEFAULT_TEMPLATE_NAME: Final[str] = "Template"
 DEFAULT_USERNAME: Final[str] = "testuser"
 DEFAULT_PASSWORD: Final[str] = "password123"
 DEFAULT_TIME = "2024-10-03T12:00:00.000000Z"
@@ -19,15 +23,17 @@ INCORRECT_SCORE: int = 77
 
 class TestViewSetBase(APITestCase):
     base_name: str
+    image: SimpleUploadedFile
     template: MemeTemplate
 
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(username="testuser", password="password123")
         cls.token = Token.objects.create(user=cls.user)
+        cls.image = cls.generate_test_image()
         cls.template = MemeTemplate.objects.create(
-            name="Template",
-            image_url="https://example.com/template1.jpg",
+            name=DEFAULT_TEMPLATE_NAME,
+            image=cls.image,
             default_top_text=f"Template{DEFAULT_TOP_TEXT}",
             default_bottom_text=f"Template{DEFAULT_BOTTOM_TEXT}",
 
@@ -74,3 +80,11 @@ class TestViewSetBase(APITestCase):
         if args:
             keys.insert(0, *args)
         return reverse(f"{cls.base_name}-detail", args=keys)
+
+    @classmethod
+    def generate_test_image(cls):
+        image = Image.new('RGB', (100, 100), color='red')
+        image_file = io.BytesIO()
+        image.save(image_file, format='JPEG')
+        image_file.seek(0)
+        return SimpleUploadedFile('test_image.jpg', image_file.read(), content_type='image/jpeg')
