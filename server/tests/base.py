@@ -82,7 +82,7 @@ class TestViewSetBase(APITestCase):
         return reverse(f"{cls.base_name}-detail", args=keys)
 
     @classmethod
-    def generate_test_image(cls):
+    def generate_test_image(cls) -> SimpleUploadedFile:
         image = Image.new('RGB', (100, 100), color='red')
         image_file = io.BytesIO()
         image.save(image_file, format='JPEG')
