@@ -17,18 +17,6 @@ class TestTopMemeSViewSet(TestViewSetBase):
         cls.base_name = "top-memes"
 
     def test_list(self) -> None:
-        high_rated_memes_ids = set()
-        for i in range(10):
-            high_rated_meme = Meme.objects.create(
-                template=self.template,
-                created_by=self.user,
-            )
-            Rating.objects.create(
-                meme=high_rated_meme,
-                user=self.user,
-                score=5,
-            )
-            high_rated_memes_ids.add(high_rated_meme.id)
         low_rated_memes_ids = set()
         for i in range(2):
             low_rated_meme = Meme.objects.create(
@@ -41,6 +29,18 @@ class TestTopMemeSViewSet(TestViewSetBase):
                 score=1,
             )
             low_rated_memes_ids.add(low_rated_meme.id)
+        high_rated_memes_ids = set()
+        for i in range(10):
+            high_rated_meme = Meme.objects.create(
+                template=self.template,
+                created_by=self.user,
+            )
+            Rating.objects.create(
+                meme=high_rated_meme,
+                user=self.user,
+                score=5,
+            )
+            high_rated_memes_ids.add(high_rated_meme.id)
 
         top_memes = self.list()
 
