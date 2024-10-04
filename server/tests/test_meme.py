@@ -15,7 +15,7 @@ DEFAULT_TIME = "2024-10-03T12:00:00.000000Z"
 
 
 @freeze_time(DEFAULT_TIME)
-class TestMemeViewsSet(APITestCase):
+class TestMemeViewSet(APITestCase):
     base_name: str
     template: MemeTemplate
 
