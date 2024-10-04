@@ -2,6 +2,7 @@ import random
 from typing import Any
 
 from django.db.models import Avg
+from django.db.models.query import QuerySet
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -40,7 +41,7 @@ class TopMemesViewSet(ListModelMixin, GenericViewSet):
     serializer_class = MemeSerializer
     swagger_tags = ["top_memes"]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         return Meme.objects.annotate(
             average_rating=Avg("ratings__score")
         ).order_by("-average_rating", "id")[:TOP_MEMES_NUMBER]
