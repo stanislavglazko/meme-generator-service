@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 from django.urls import reverse
 from meme_generator.models import MemeTemplate
 from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 
@@ -36,7 +37,7 @@ class TestViewSetBase(APITestCase):
     def list_url(cls, args: list[str | int] = None) -> str:
         return reverse(f"{cls.base_name}-list", args=args)
 
-    def request_list(self, data: dict = None, args: list[str | int] = None) -> Any:
+    def request_list(self, data: dict = None, args: list[str | int] = None) -> Response:
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         return self.client.get(self.list_url(args), data=data)
 
@@ -45,7 +46,7 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.OK, response.content
         return response.json()["results"]
 
-    def request_create(self, data: dict[str, Any], args: list = None) -> Any:
+    def request_create(self, data: dict[str, Any], args: list = None) -> Response:
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         return self.client.post(self.list_url(args), data=data)
 
@@ -56,7 +57,7 @@ class TestViewSetBase(APITestCase):
 
     def request_retrieve(
         self, entity: dict, query_params: dict = None, args: list = None
-    ) -> Any:
+    ) -> Response:
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         return self.client.get(self.detail_url(entity["id"], args), data=query_params)
 
