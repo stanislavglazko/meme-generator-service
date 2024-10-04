@@ -4,10 +4,10 @@ from .models import Meme, MemeTemplate, Rating
 
 @admin.register(Meme)
 class MemeAdmin(admin.ModelAdmin):
-    list_display = ('template', 'top_text', 'bottom_text', 'created_by', 'created_at')
+    list_display = ('id', 'template', 'top_text', 'bottom_text', 'created_by', 'created_at')
     search_fields = ('top_text', 'bottom_text', 'created_by__username')
     list_filter = ('created_at', 'template')
-    readonly_fields = ('created_by', 'created_at', 'id')
+    readonly_fields = ('created_by', 'created_at')
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:
@@ -17,10 +17,10 @@ class MemeAdmin(admin.ModelAdmin):
 
 @admin.register(MemeTemplate)
 class MemeTemplateAdmin(admin.ModelAdmin):
-    list_display = ('name', 'image_url', 'default_top_text', 'default_bottom_text')
+    list_display = ('id', 'name', 'image_url', 'default_top_text', 'default_bottom_text')
 
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'meme', 'user', 'score', 'created_at')
-    readonly_fields = ('created_at', 'id')
+    readonly_fields = ('created_at', )
