@@ -19,11 +19,14 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
-from meme_generator.views import MemeViewSet, RandomMemeViewSet, RatingViewSet, TemplatesViewSet, TopMemesViewSet
+from meme_generator.views import (
+    MemeViewSet, RandomMemeViewSet, RatingViewSet, TemplatesViewSet, TopMemesViewSet, SurpriseMeViewSet
+)
 
 router = DefaultRouter()
 router.register(r'templates', TemplatesViewSet, basename='template')
 router.register(r'memes/random', RandomMemeViewSet, basename='random-meme')
+router.register(r'memes/surprise-me', SurpriseMeViewSet, basename='surprise-me')
 router.register(r'memes/top', TopMemesViewSet, basename='top-memes')
 router.register(r'memes/(?P<meme_pk>\d+)/rate', RatingViewSet, basename='rating')
 router.register(r'memes', MemeViewSet, basename='meme')

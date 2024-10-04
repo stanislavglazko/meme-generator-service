@@ -11,6 +11,7 @@ from rest_framework.viewsets import GenericViewSet, ViewSet
 
 from meme_generator.models import Meme
 from meme_generator.serializers import MemeSerializer
+from meme_generator.services import SurpriseMeService
 
 TOP_MEMES_NUMBER: int = 10
 
@@ -45,3 +46,13 @@ class TopMemesViewSet(ListModelMixin, GenericViewSet):
         return Meme.objects.annotate(
             average_rating=Avg("ratings__score")
         ).order_by("-average_rating", "id")[:TOP_MEMES_NUMBER]
+
+
+class SurpriseMeViewSet(ViewSet):
+    serializer_class = MemeSerializer
+    swagger_tags = ["surprise_me"]
+
+    def list(self, request):
+        meme = SurpriseMeService.create_surprise(user=request.user)
+        serializer = self.serializer_class(meme)
+        return Response(serializer.data)

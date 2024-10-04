@@ -1,4 +1,4 @@
-from .meme import MemeViewSet, RandomMemeViewSet, TopMemesViewSet, TOP_MEMES_NUMBER
+from .meme import MemeViewSet, RandomMemeViewSet, TopMemesViewSet, TOP_MEMES_NUMBER, SurpriseMeViewSet
 from .template import TemplatesViewSet
 from .rating import RatingViewSet
 
@@ -8,5 +8,6 @@ __all__ = [
     "RandomMemeViewSet",
     "RatingViewSet",
     "TopMemesViewSet",
-    "TOP_MEMES_NUMBER"
+    "TOP_MEMES_NUMBER",
+    "SurpriseMeViewSet"
 ]
