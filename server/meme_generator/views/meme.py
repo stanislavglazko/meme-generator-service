@@ -1,6 +1,7 @@
 import random
 from typing import Any
 
+from django.db.models import Avg
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -9,6 +10,8 @@ from rest_framework.viewsets import GenericViewSet, ViewSet
 
 from meme_generator.models import Meme
 from meme_generator.serializers import MemeSerializer
+
+TOP_MEMES_NUMBER: int = 10
 
 
 class MemeViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
@@ -31,3 +34,13 @@ class RandomMemeViewSet(ViewSet):
         meme = Meme.objects.all()[random_index]
         serializer = MemeSerializer(meme)
         return Response(serializer.data)
+
+
+class TopMemesViewSet(ListModelMixin, GenericViewSet):
+    serializer_class = MemeSerializer
+    swagger_tags = ["top_memes"]
+
+    def get_queryset(self):
+        return Meme.objects.annotate(
+            average_rating=Avg("ratings__score")
+        ).order_by("-average_rating", "id")[:TOP_MEMES_NUMBER]
