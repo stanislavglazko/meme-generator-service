@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Meme, MemeTemplate
+from .models import Meme, MemeTemplate, Rating
 
 
 @admin.register(Meme)
@@ -18,3 +18,9 @@ class MemeAdmin(admin.ModelAdmin):
 @admin.register(MemeTemplate)
 class MemeTemplateAdmin(admin.ModelAdmin):
     list_display = ('name', 'image_url', 'default_top_text', 'default_bottom_text')
+
+
+@admin.register(Rating)
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'meme', 'user', 'score', 'created_at')
+    readonly_fields = ('created_at', 'id')
