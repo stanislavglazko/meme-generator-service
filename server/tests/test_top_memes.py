@@ -7,7 +7,7 @@ from .base import TestViewSetBase, DEFAULT_TIME
 
 
 @freeze_time(DEFAULT_TIME)
-class TestTopMemeSViewSet(TestViewSetBase):
+class TestTopMemesViewSet(TestViewSetBase):
     base_name: str
     template: MemeTemplate
 
