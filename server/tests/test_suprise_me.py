@@ -2,9 +2,8 @@ from freezegun import freeze_time
 from http import HTTPStatus
 from typing import Any
 
-from meme_generator.models import Meme, MemeTemplate, Rating
+from meme_generator.models import MemeTemplate
 from meme_generator.services import FUNNY_PHRASES
-from meme_generator.views import TOP_MEMES_NUMBER
 
 from .base import TestViewSetBase, DEFAULT_TIME
 
