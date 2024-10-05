@@ -65,3 +65,6 @@ Feel free to open an issue or submit a pull request if you have suggestions or i
 5) **Stored images in the media directory**: For local development, images are stored in the media folder. In a production setting, this should be replaced with a cloud storage solution like AWS S3.
 6) **Minimal comments in the code**: I believe well-written code with sufficient tests doesn't require a large number of comments.
 7) **Added a separate `services` directory**: This allows for business logic to be maintained in a dedicated layer, following the architecture: model -> service -> view.
+
+
+### This project is not for commercial use; it is for educational purposes only.
