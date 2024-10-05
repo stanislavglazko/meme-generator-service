@@ -1,3 +1,4 @@
+from django.utils.html import format_html
 from django.contrib import admin
 from .models import Meme, MemeTemplate, Rating
 
@@ -7,7 +8,14 @@ class MemeAdmin(admin.ModelAdmin):
     list_display = ('id', 'template', 'top_text', 'bottom_text', 'created_by', 'created_at')
     search_fields = ('top_text', 'bottom_text', 'created_by__username')
     list_filter = ('created_at', 'template')
-    readonly_fields = ('created_by', 'created_at')
+    readonly_fields = ('created_by', 'created_at', 'image_url', 'image_url_display')
+
+    def image_url_display(self, obj):
+        if obj.image_url:
+            return format_html('<a href="{}" target="_blank">{}</a>', obj.image_url, "Open Image")
+        return "-"
+
+    image_url_display.short_description = "Image URL"
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:

@@ -13,5 +13,7 @@ class MemeSerializer(ModelSerializer):
             "top_text",
             "bottom_text",
             "created_by",
-            "created_at"
+            "created_at",
+            "image_url"
         ]
+        read_only_fields = ["image_url"]

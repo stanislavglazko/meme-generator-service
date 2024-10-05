@@ -1,7 +1,9 @@
 import io
+import os
 from PIL import Image
 from typing import Any, Final
 from http import HTTPStatus
+from django.conf import settings
 from django.urls import reverse
 from meme_generator.models import MemeTemplate
 from rest_framework.authtoken.models import Token
@@ -88,3 +90,6 @@ class TestViewSetBase(APITestCase):
         image.save(image_file, format='JPEG')
         image_file.seek(0)
         return SimpleUploadedFile('test_image.jpg', image_file.read(), content_type='image/jpeg')
+
+    def get_meme_image_url(self, top_text: str = DEFAULT_TOP_TEXT, bottom_text: str = DEFAULT_BOTTOM_TEXT) -> str:
+        return f"/media/generated_memes/meme_{self.template.id}_{top_text[:3]}_{bottom_text[:3]}.jpg"
