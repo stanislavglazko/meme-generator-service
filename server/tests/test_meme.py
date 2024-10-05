@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 from freezegun import freeze_time
 from meme_generator.models import Meme, MemeTemplate

@@ -1,9 +1,7 @@
 import io
-import os
 from PIL import Image
 from typing import Any, Final
 from http import HTTPStatus
-from django.conf import settings
 from django.urls import reverse
 from meme_generator.models import MemeTemplate
 from rest_framework.authtoken.models import Token
