@@ -18,6 +18,7 @@ Meme templates can be managed via the Django Admin Panel.
 ## API Endpoints
 
 - **GET** `/api/templates/`: List all meme templates.
+- **GET** `/api/memes/surprise-me/` Returns a meme with random text from a list of funny phrases.
 - **GET** `/api/memes/`: List all memes (with pagination).
 - **POST** `/api/memes/`: Create a new meme.
 - **GET** `/api/memes/<id>/`: Retrieve a specific meme by ID.
@@ -41,7 +42,7 @@ To set up and run the project locally, follow these steps:
     make init
     ```
 
-4. You can now access the API at `http://localhost:8000` and the admin panel at `http://localhost:8000/admin`.
+4. You can now access the API at `http://localhost:8000/swagger/` and the admin panel at `http://localhost:8000/admin`.
 
 5. To add meme templates, use the Django Admin panel.
 
@@ -55,3 +56,14 @@ To set up and run the project locally, follow these steps:
 ## How to contribute
 
 Feel free to open an issue or submit a pull request if you have suggestions or improvements.
+
+
+## Comments about current tech decisions
+
+1) **Implemented API tests instead of unit tests**: There isn't rich business logic in this project, and testing the entire API was a reasonable decision due to its simplicity. 
+2) **Added multiprocessing to tests**: This was done to speed up the test execution.
+3) **Integrated `ruff` linter**: Ensures that the code maintains high quality by following best practices.
+4) **Direct commits to the main branch**: Instead of following the standard git flow (with pull requests and branching for different environments), commits were pushed directly to the main branch to accelerate development. I understand that this approach is not suitable for team development.
+5) **Stored images in the media directory**: For local development, images are stored in the media folder. In a production setting, this should be replaced with a cloud storage solution like AWS S3.
+6) **Minimal comments in the code**: I believe well-written code with sufficient tests doesn't require a large number of comments.
+7) **Added a separate `services` directory**: This allows for business logic to be maintained in a dedicated layer, following the architecture: model -> service -> view.
