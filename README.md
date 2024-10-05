@@ -35,16 +35,14 @@ To set up and run the project locally, follow these steps:
     git clone <repository-url>
     ```
 
-2. Create a `.env` file and provide necessary environment variables such as `DJANGO_SECRET_KEY`.
-
-3. Build and initialize the Docker containers and apply the migrations by running:
+2. Build and initialize the Docker containers and apply the migrations by running:
     ```bash
     make init
     ```
 
-4. You can now access the API at `http://localhost:8000/swagger/` and the admin panel at `http://localhost:8000/admin`.
+3. You can now access the API at `http://localhost:8000/swagger/` and the admin panel at `http://localhost:8000/admin`.
 
-5. To add meme templates, use the Django Admin panel.
+4. To add meme templates, use the Django Admin panel.
 
 ## Requirements
 
