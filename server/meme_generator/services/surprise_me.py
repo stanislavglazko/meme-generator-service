@@ -26,7 +26,9 @@ class SurpriseMeService():
 
     @classmethod
     def get_template(cls) -> MemeTemplate:
-        return MemeTemplate.objects.first()
+        meme_template_count = MemeTemplate.objects.count()
+        random_index = random.randint(0, meme_template_count - 1)
+        return MemeTemplate.objects.all()[random_index]
 
     @classmethod
     def create_text(cls) -> str:
