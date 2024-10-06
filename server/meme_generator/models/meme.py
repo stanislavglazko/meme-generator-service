@@ -1,4 +1,5 @@
 import os
+import uuid
 from PIL import Image, ImageDraw, ImageFont
 from typing import Any, Final
 from django.db import models
@@ -57,7 +58,7 @@ class Meme(models.Model):
             bottom_text_position = (10, height - (height // 4))
             draw.text(bottom_text_position, bottom_text, font=font, fill="black")
 
-            unique_filename = f"meme_{self.template.id}_{top_text[:3]}_{bottom_text[:3]}.jpg"
+            unique_filename = f"meme_{self.template.id}_{uuid.uuid4().hex}.jpg"
             relative_path = os.path.join(MEME_IMAGES_DIRECTORY, unique_filename)
             image_path = os.path.join(settings.MEDIA_ROOT, relative_path)
             img.save(image_path)

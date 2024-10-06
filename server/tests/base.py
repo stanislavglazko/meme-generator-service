@@ -1,4 +1,5 @@
 import io
+import re
 from PIL import Image
 from typing import Any, Final
 from http import HTTPStatus
@@ -89,5 +90,7 @@ class TestViewSetBase(APITestCase):
         image_file.seek(0)
         return SimpleUploadedFile("test_image.jpg", image_file.read(), content_type="image/jpeg")
 
-    def get_meme_image_url(self, top_text: str = DEFAULT_TOP_TEXT, bottom_text: str = DEFAULT_BOTTOM_TEXT) -> str:
-        return f"/media/generated_memes/meme_{self.template.id}_{top_text[:3]}_{bottom_text[:3]}.jpg"
+    @classmethod
+    def check_meme_image_url(cls, meme_image_url: str, meme_template_id: int) -> None:
+        pattern = fr"^meme_{meme_template_id}_[a-f0-9]{{32}}\.jpg$"
+        cls.assertTrue(re.match(pattern, meme_image_url), "The file name does not match the expected pattern")

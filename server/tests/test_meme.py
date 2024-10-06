@@ -29,7 +29,11 @@ class TestMemeViewSet(TestViewSetBase):
         time_obj = datetime.strptime(DEFAULT_TIME, "%Y-%m-%dT%H:%M:%S.%fZ")
         formatted_time_str = time_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-        assert self.list() == [
+        memes = self.list()
+        for meme in memes:
+            self.check_meme_image_url(meme.pop("image_url"), self.template.id)
+
+        assert memes == [
             {
                 "id": self.first_meme.id,
                 "template": self.template.id,
@@ -37,7 +41,6 @@ class TestMemeViewSet(TestViewSetBase):
                 "bottom_text": DEFAULT_BOTTOM_TEXT,
                 "created_by": self.user.id,
                 "created_at": formatted_time_str,
-                "image_url": self.get_meme_image_url(top_text=self.template.default_top_text),
             },
             {
                 "id": self.second_meme.id,
@@ -46,7 +49,6 @@ class TestMemeViewSet(TestViewSetBase):
                 "bottom_text": self.template.default_bottom_text,
                 "created_by": self.user.id,
                 "created_at": formatted_time_str,
-                "image_url": self.get_meme_image_url(bottom_text=self.template.default_bottom_text),
             },
         ]
 
@@ -65,6 +67,7 @@ class TestMemeViewSet(TestViewSetBase):
         time_obj = datetime.strptime(DEFAULT_TIME, "%Y-%m-%dT%H:%M:%S.%fZ")
         formatted_time_str = time_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
+        self.check_meme_image_url(meme.pop("image_url"), self.template.id)
         assert meme == {
                 "id": meme["id"],
                 "template": self.template.id,
@@ -72,7 +75,6 @@ class TestMemeViewSet(TestViewSetBase):
                 "bottom_text": DEFAULT_BOTTOM_TEXT,
                 "created_by": self.user.id,
                 "created_at": formatted_time_str,
-                "image_url": self.get_meme_image_url(),
             }
 
     def test_retrieve(self) -> None:
@@ -82,7 +84,6 @@ class TestMemeViewSet(TestViewSetBase):
                 "top_text": DEFAULT_TOP_TEXT,
                 "bottom_text": DEFAULT_BOTTOM_TEXT,
                 "created_by": self.user.id,
-                "image_url": self.get_meme_image_url(),
             },
         )
 
