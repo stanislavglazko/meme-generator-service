@@ -42,7 +42,7 @@ class TopMemesViewSet(ListModelMixin, GenericViewSet):
     def get_queryset(self) -> QuerySet:
         return Meme.objects.annotate(
             average_rating=Avg("ratings__score")
-        ).order_by("-average_rating", "id")[:TOP_MEMES_NUMBER]
+        ).filter(average_rating__isnull=False).order_by("-average_rating", "id")[:TOP_MEMES_NUMBER]
 
 
 class SurpriseMeViewSet(CreateModelMixin, ViewSet):
