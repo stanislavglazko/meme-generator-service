@@ -8,4 +8,3 @@ from meme_generator.serializers import TemplateListSerializer
 class TemplatesViewSet(ListModelMixin, GenericViewSet):
     serializer_class = TemplateListSerializer
     queryset = MemeTemplate.objects.order_by("id")
-    swagger_tags = ["templates"]

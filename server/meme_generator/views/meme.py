@@ -19,12 +19,9 @@ TOP_MEMES_NUMBER: int = 10
 class MemeViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class = MemeSerializer
     queryset = Meme.objects.order_by("id")
-    swagger_tags = ["memes"]
 
 
 class RandomMemeViewSet(ViewSet):
-    swagger_tags = ["random_meme"]
-
     @swagger_auto_schema(
         responses={200: MemeSerializer()},
     )
@@ -40,7 +37,6 @@ class RandomMemeViewSet(ViewSet):
 
 class TopMemesViewSet(ListModelMixin, GenericViewSet):
     serializer_class = MemeSerializer
-    swagger_tags = ["top_memes"]
 
     def get_queryset(self) -> QuerySet:
         return Meme.objects.annotate(
@@ -50,7 +46,6 @@ class TopMemesViewSet(ListModelMixin, GenericViewSet):
 
 class SurpriseMeViewSet(ViewSet):
     serializer_class = MemeSerializer
-    swagger_tags = ["surprise_me"]
 
     def list(self, request):
         meme = SurpriseMeService.create_surprise(user=request.user)

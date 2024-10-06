@@ -11,7 +11,6 @@ from meme_generator.serializers import RatingSerializer
 
 class RatingViewSet(CreateModelMixin, GenericViewSet):
     serializer_class = RatingSerializer
-    swagger_tags = ["rating"]
 
     def create(self, request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
