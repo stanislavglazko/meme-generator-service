@@ -11,7 +11,7 @@ FUNNY_PHRASES = [
 ]
 
 
-class SurpriseMeService():
+class SurpriseMeService:
     @classmethod
     def create_surprise(cls, user) -> Meme:
         template = cls.get_template()
