@@ -44,7 +44,7 @@ class TestViewSetBase(APITestCase):
         return reverse(f"{cls.base_name}-list", args=args)
 
     def request_list(self, data: dict = None, args: list[str | int] = None) -> Response:
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         return self.client.get(self.list_url(args), data=data)
 
     def list(self, query_params: dict = None, args: list[str | int] = None) -> list[dict[str, Any]]:
@@ -53,7 +53,7 @@ class TestViewSetBase(APITestCase):
         return response.json()["results"]
 
     def request_create(self, data: dict[str, Any], args: list = None) -> Response:
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         return self.client.post(self.list_url(args), data=data)
 
     def create(self, data: dict[str, Any], args: list = None) -> dict[str, Any]:
@@ -64,7 +64,7 @@ class TestViewSetBase(APITestCase):
     def request_retrieve(
         self, entity: dict, query_params: dict = None, args: list = None
     ) -> Response:
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         return self.client.get(self.detail_url(entity["id"], args), data=query_params)
 
     def retrieve(
@@ -83,11 +83,11 @@ class TestViewSetBase(APITestCase):
 
     @classmethod
     def generate_test_image(cls) -> SimpleUploadedFile:
-        image = Image.new('RGB', (100, 100), color='red')
+        image = Image.new("RGB", (100, 100), color="red")
         image_file = io.BytesIO()
-        image.save(image_file, format='JPEG')
+        image.save(image_file, format="JPEG")
         image_file.seek(0)
-        return SimpleUploadedFile('test_image.jpg', image_file.read(), content_type='image/jpeg')
+        return SimpleUploadedFile("test_image.jpg", image_file.read(), content_type="image/jpeg")
 
     def get_meme_image_url(self, top_text: str = DEFAULT_TOP_TEXT, bottom_text: str = DEFAULT_BOTTOM_TEXT) -> str:
         return f"/media/generated_memes/meme_{self.template.id}_{top_text[:3]}_{bottom_text[:3]}.jpg"

@@ -26,8 +26,8 @@ class TestMemeViewSet(TestViewSetBase):
         cls.base_name = "meme"
 
     def test_list(self) -> None:
-        time_obj = datetime.strptime(DEFAULT_TIME, '%Y-%m-%dT%H:%M:%S.%fZ')
-        formatted_time_str = time_obj.strftime('%Y-%m-%dT%H:%M:%SZ')
+        time_obj = datetime.strptime(DEFAULT_TIME, "%Y-%m-%dT%H:%M:%S.%fZ")
+        formatted_time_str = time_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         assert self.list() == [
             {
@@ -62,8 +62,8 @@ class TestMemeViewSet(TestViewSetBase):
                 "created_by": self.user.id,
             },
         )
-        time_obj = datetime.strptime(DEFAULT_TIME, '%Y-%m-%dT%H:%M:%S.%fZ')
-        formatted_time_str = time_obj.strftime('%Y-%m-%dT%H:%M:%SZ')
+        time_obj = datetime.strptime(DEFAULT_TIME, "%Y-%m-%dT%H:%M:%S.%fZ")
+        formatted_time_str = time_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         assert meme == {
                 "id": meme["id"],

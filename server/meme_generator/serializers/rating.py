@@ -7,4 +7,4 @@ from meme_generator.models import Rating
 class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
-        fields = ['score']
+        fields = ["score"]

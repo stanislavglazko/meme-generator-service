@@ -11,4 +11,4 @@ class MemeTemplate(models.Model):
     def image_url(self):
         if self.image:
             return self.image.url
-        return ''
+        return ""

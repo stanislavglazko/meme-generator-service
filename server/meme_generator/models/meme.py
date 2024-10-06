@@ -8,7 +8,7 @@ from django.conf import settings
 
 from .template import MemeTemplate
 
-MEME_IMAGES_DIRECTORY: Final[str] = 'generated_memes'
+MEME_IMAGES_DIRECTORY: Final[str] = "generated_memes"
 
 
 def fit_text_to_image(text: str, max_width: int, draw: ImageDraw, font: ImageFont) -> str:
@@ -52,11 +52,11 @@ class Meme(models.Model):
 
             top_text = fit_text_to_image(top_text, max_width, draw, font)
             top_text_position = (10, height // 8)
-            draw.text(top_text_position, top_text, font=font, fill='white')
+            draw.text(top_text_position, top_text, font=font, fill="white")
 
             bottom_text = fit_text_to_image(bottom_text, max_width, draw, font)
             bottom_text_position = (10, height - (height // 4))
-            draw.text(bottom_text_position, bottom_text, font=font, fill='black')
+            draw.text(bottom_text_position, bottom_text, font=font, fill="black")
 
             unique_filename = f"meme_{self.template.id}_{top_text[:3]}_{bottom_text[:3]}.jpg"
             relative_path = os.path.join(MEME_IMAGES_DIRECTORY, unique_filename)
