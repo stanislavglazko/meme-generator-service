@@ -56,7 +56,7 @@ class TestViewSetBase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
         return self.client.post(self.list_url(args), data=data)
 
-    def create(self, data: dict[str, Any], args: list = None) -> dict[str, Any]:
+    def create(self, data: dict[str, Any] = None, args: list = None) -> dict[str, Any]:
         response = self.request_create(data, args)
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.json()

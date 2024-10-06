@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from typing import Any, Final
 from django.db import models

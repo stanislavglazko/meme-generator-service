@@ -4,6 +4,7 @@ from typing import Any
 from django.db.models import Avg
 from django.db.models.query import QuerySet
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -44,10 +45,11 @@ class TopMemesViewSet(ListModelMixin, GenericViewSet):
         ).order_by("-average_rating", "id")[:TOP_MEMES_NUMBER]
 
 
-class SurpriseMeViewSet(ViewSet):
+class SurpriseMeViewSet(CreateModelMixin, ViewSet):
     serializer_class = MemeSerializer
 
-    def list(self, request):
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         meme = SurpriseMeService.create_surprise(user=request.user)
         serializer = self.serializer_class(meme)
-        return Response(serializer.data)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
