@@ -29,7 +29,7 @@ class RandomMemeViewSet(ViewSet):
     def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         meme_count = Meme.objects.count()
         if meme_count == 0:
-            return Response({"detail": "No memes available"}, status=404)
+            return Response({"detail": "No memes available"}, status.HTTP_404_NOT_FOUND)
         random_index = random.randint(0, meme_count - 1)
         meme = Meme.objects.all()[random_index]
         serializer = MemeSerializer(meme)
