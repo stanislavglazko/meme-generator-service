@@ -18,7 +18,7 @@ Meme templates can be managed via the Django Admin Panel.
 ## API Endpoints
 
 - **GET** `/api/templates/`: List all meme templates.
-- **GET** `/api/memes/surprise-me/` Returns a meme with random text from a list of funny phrases.
+- **POST** `/api/memes/surprise-me/` Returns a meme with random text from a list of funny phrases.
 - **GET** `/api/memes/`: List all memes (with pagination).
 - **POST** `/api/memes/`: Create a new meme.
 - **GET** `/api/memes/<id>/`: Retrieve a specific meme by ID.
