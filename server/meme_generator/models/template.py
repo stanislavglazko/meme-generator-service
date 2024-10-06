@@ -8,7 +8,7 @@ class MemeTemplate(models.Model):
     image = models.ImageField(upload_to="templates/")
 
     @property
-    def image_url(self):
+    def image_url(self) -> str:
         if self.image:
             return self.image.url
         return ""
