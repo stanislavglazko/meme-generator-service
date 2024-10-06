@@ -1,5 +1,7 @@
 import random
 
+from django.contrib.auth.models import User
+
 from meme_generator.models import Meme, MemeTemplate
 
 
@@ -13,7 +15,7 @@ FUNNY_PHRASES = [
 
 class SurpriseMeService:
     @classmethod
-    def create_surprise(cls, user) -> Meme:
+    def create_surprise(cls, user: User) -> Meme:
         template = cls.get_template()
         top_text = cls.create_text()
         bottom_text = cls.create_text()
