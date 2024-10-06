@@ -1,7 +1,8 @@
-
+from typing import Any
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.mixins import CreateModelMixin
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -12,13 +13,13 @@ from meme_generator.serializers import RatingSerializer
 class RatingViewSet(CreateModelMixin, GenericViewSet):
     serializer_class = RatingSerializer
 
-    def create(self, request, *args, **kwargs) -> Response:
+    def create(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         meme = get_object_or_404(Meme, pk=self.kwargs.get("meme_pk"))
         user = self.request.user
-        score = request.data.get("score")
+        score = serializer.validated_data.get("score")
 
         rating, created = Rating.objects.update_or_create(
             meme=meme,
