@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-from typing import Final
+from typing import Any, Final
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -35,7 +35,7 @@ class Meme(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     image_url = models.URLField(null=True, blank=True)
 
-    def save(self, *args, **kwargs) -> None:
+    def save(self, *args: Any, **kwargs: Any) -> None:
         top_text = self.top_text or self.template.default_top_text
         bottom_text = self.bottom_text or self.template.default_bottom_text
         self.top_text = top_text
@@ -61,7 +61,6 @@ class Meme(models.Model):
             unique_filename = f"meme_{self.template.id}_{top_text[:3]}_{bottom_text[:3]}.jpg"
             relative_path = os.path.join(MEME_IMAGES_DIRECTORY, unique_filename)
             image_path = os.path.join(settings.MEDIA_ROOT, relative_path)
-            Path(os.path.dirname(image_path)).mkdir(parents=True, exist_ok=True)
             img.save(image_path)
             self.image_url = os.path.join(settings.MEDIA_URL, relative_path)
 
